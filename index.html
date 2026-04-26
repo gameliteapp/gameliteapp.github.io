@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameLite | Play HTML5 Games Online</title>
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-light: #a29bfe;
+            --secondary: #fd79a8;
+            --dark: #1e1f29;
+            --dark-light: #636e72;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --blur: blur(10px);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 24px;
+        }
+        
+        .logo-icon {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+        
+        /* Search Bar */
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 30px;
+            position: relative;
+        }
+        
+        .search-bar {
+            width: 100%;
+            padding: 12px 20px;
+            padding-right: 45px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.2);
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-light);
+        }
+        
+        .close-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dark-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+        }
+        
+        .close-icon:hover {
+            color: var(--danger);
+        }
+
+        /* Mobile Menu Toggle */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--dark);
+    font-size: 24px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+        
+        /* User Navigation */
+        .user-nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--dark);
+            margin-left: 20px;
+            font-weight: 500;
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .nav-link i {
+            margin-right: 8px;
+        }
+        
+        .favorites-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--secondary);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+        }
+        
+        section.all-games {
+            margin-top: 50px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .view-all i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .view-all:hover i {
+            transform: translateX(3px);
+        }
+        
+        /* Categories */
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+        
+        .categories::-webkit-scrollbar {
+            height: 5px;
+        }
+        
+        .categories::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+        
+        .category {
+            padding: 8px 20px;
+            background: white;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .category:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.1);
+        }
+        
+        .category.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
+        }
+        
+        .game-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: fadeIn 0.5s ease-out;
+            animation-fill-mode: backwards;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.2);
+        }
+        
+        .game-thumbnail {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .game-card:hover .game-thumbnail img {
+            transform: scale(1.05);
+        }
+        
+        .game-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .play-button {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .game-card:hover .play-overlay {
+            opacity: 1;
+        }
+        
+        .game-card:hover .play-button {
+            transform: scale(1);
+        }
+        
+        .game-info {
+            padding: 16px;
+        }
+        
+        .game-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .game-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            color: var(--dark-light);
+        }
+        
+        .game-rating {
+            display: flex;
+            align-items: center;
+            color: var(--warning);
+        }
+        
+        .game-rating i {
+            margin-right: 3px;
+        }
+        
+        .game-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+        }
+        
+        .btn {
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-play {
+            background: var(--primary);
+            color: white;
+            flex: 1;
+            margin-right: 8px;
+        }
+        
+        .btn-play:hover {
+            background: var(--primary-light);
+        }
+        
+        .btn-favorite {
+            width: 36px;
+            height: 36px;
+            background: var(--light);
+            color: var(--dark-light);
+            border-radius: 8px;
+        }
+        
+        .btn-favorite.favorited {
+            color: var(--secondary);
+        }
+        
+        /* Game Viewer */
+        .game-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: none;
+            flex-direction: column;
+            backdrop-filter: blur(5px);
+        }
+        
+        .game-viewer.active {
+            display: flex;
+        }
+        
+        .game-viewer-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .game-viewer-title {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .game-viewer-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        
+        .game-viewer-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .game-viewer-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .game-iframe {
+            width: 100%;
+            max-width: 900px;
+            height: 70vh;
+            border: none;
+            border-radius: 12px;
+            background: black;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .game-viewer-actions {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .btn-fullscreen {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-fullscreen i {
+            margin-right: 8px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 20px 0;
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-copyright {
+            font-size: 14px;
+            color: #b2bec3;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #b2bec3;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* Search results section */
+        .search-results {
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        /* Hide sections when searching */
+        .searching .recent-games,
+        .searching .all-games,
+        .searching .category-games,
+        .searching .favorites-games,
+        .searching .featured-games {
+            display: none;
+        }
+        
+        /* Category games section */
+        .category-games {
+            display: none;
+        }
+        
+        .category-games.active {
+            display: block;
+        }
+        
+        /* Hide sections when category is selected */
+        .category-selected .recent-games,
+        .category-selected .all-games,
+        .category-selected .favorites-games,
+        .category-selected .featured-games {
+            display: none;
+        }
+        
+        /* Favorites games section */
+        .favorites-games {
+            display: none;
+        }
+
+        .favorites-games.active {
+            display: block;
+        }
+
+        /* Hide sections when favorites is selected */
+        .favorites-selected .recent-games,
+        .favorites-selected .all-games,
+        .favorites-selected .category-games,
+        .favorites-selected .search-results,
+        .favorites-selected .featured-games {
+            display: none;
+        }
+        
+        /* Featured games section */
+        .featured-games {
+            display: none;
+        }
+
+        .featured-games.active {
+            display: block;
+        }
+
+        /* Hide sections when featured is selected */
+        .featured-selected .recent-games,
+        .featured-selected .all-games,
+        .featured-selected .category-games,
+        .featured-selected .search-results,
+        .featured-selected .favorites-games {
+            display: none;
+        }
+        
+        /* Modal/Popup Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.3s ease-out;
+            position: relative;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--dark);
+            margin: 0;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark-light);
+            transition: color 0.3s;
+        }
+        
+        .modal-close:hover {
+            color: var(--danger);
+        }
+        
+        .modal-content {
+            padding: 20px;
+        }
+        
+        .modal-content h2 {
+            color: var(--primary);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .modal-content p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .modal-content ul {
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+        
+        .modal-content li {
+            margin-bottom: 8px;
+        }
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .games-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+    .menu-toggle {
+        display: block;
+    }
+    
+    .user-nav {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: var(--glass);
+        backdrop-filter: var(--blur);
+        -webkit-backdrop-filter: var(--blur);
+        border-bottom: 1px solid var(--glass-border);
+        flex-direction: column;
+        padding: 15px 20px;
+        transform: translateY(-150%);
+        transition: transform 0.3s ease;
+        z-index: 999;
+    }
+    
+    .user-nav.active {
+        transform: translateY(0);
+        background: white;
+    }
+    
+    .user-nav .nav-link {
+        margin: 10px 0;
+        padding: 10px;
+    }
+    
+    .header-container {
+        padding: 15px 0;
+    }
+    
+    .search-container {
+        margin: 0 15px;
+    }
+}
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-container">
+                <a href="./" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <span>GameLite</span>
+                </a>
+                
+                <div class="search-container">
+                    <input type="text" class="search-bar" placeholder="Search games...">
+                    <i class="fas fa-search search-icon"></i>
+                    <i class="fas fa-times close-icon" style="display: none;"></i>
+                </div>
+                
+                <button class="menu-toggle" id="menu-toggle">
+                     <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="user-nav">
+                    <a href="./" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#" class="nav-link" id="featured-link">
+                        <i class="fas fa-star"></i>
+                        <span>Featured</span>
+                    </a>
+                    <a href="#" class="nav-link" id="favorites-link">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                        <span class="favorites-count">3</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="main-content">
+        <div class="container">
+            <div class="categories">
+                <div class="category active" data-category="all">All Games</div>
+                <div class="category" data-category="Action">Action</div>
+                <div class="category" data-category="Adventure">Adventure</div>
+                <div class="category" data-category="Puzzle">Puzzle</div>
+                <div class="category" data-category="Sports">Sports</div>
+                <div class="category" data-category="Racing">Racing</div>
+                <div class="category" data-category="Shooter">Shooter</div>
+                <div class="category" data-category="Casual">Casual</div>
+                <div class="category" data-category="Arcade">Arcade</div>
+                <div class="category" data-category="Multiplayer">Multiplayer</div>
+            </div>
+            
+            <!-- Search Results Section -->
+            <section class="search-results" id="search-results">
+                <div class="section-header">
+                    <h2 class="section-title">Search Results</h2>
+                </div>
+                
+                <div class="games-grid" id="search-results-container">
+                    <!-- Search results will be loaded here -->
+                </div>
+            </section>
+            
+            <!-- Category Games Section -->
+            <section class="category-games" id="category-games">
+                <div class="section-header">
+                    <h2 class="section-title" id="category-title">Category</h2>
+                </div>
+                
+                <div class="games-grid" id="category-games-container">
+                    <!-- Category games will be loaded here -->
+                </div>
+            </section>
+            
+            <!-- Favorites Games Section -->
+            <section class="favorites-games" id="favorites-games">
+                <div class="section-header">
+                    <h2 class="section-title">Favorite Games</h2>
+                </div>
+                
+                <div class="games-grid" id="favorites-games-container">
+                    <!-- Favorite games will be loaded here -->
+                </div>
+            </section>
+            
+            <!-- Featured Games Section -->
+            <section class="featured-games" id="featured-games">
+                <div class="section-header">
+                    <h2 class="section-title">Featured Games</h2>
+                </div>
+                
+                <div class="games-grid" id="featured-games-container">
+                    <!-- Featured games will be loaded here -->
+                </div>
+            </section>
+            
+            <section class="recent-games">
+                <div class="section-header">
+                    <h2 class="section-title">Recently Played</h2>
+                </div>
+                
+                <div class="games-grid" id="recent-games">
+                    <!-- Recently played games will be loaded here -->
+                </div>
+            </section>
+            
+            <section class="all-games">
+                <div class="section-header">
+                    <h2 class="section-title">All Games</h2>
+                </div>
+                
+                <div class="games-grid" id="games-container">
+                    <!-- All games will be loaded here -->
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <div class="game-viewer" id="game-viewer">
+        <div class="game-viewer-header">
+            <h3 class="game-viewer-title" id="game-viewer-title">Game Title</h3>
+            <button class="game-viewer-close" id="game-viewer-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="game-viewer-content">
+            <iframe class="game-iframe" id="game-iframe" allowfullscreen></iframe>
+        </div>
+        <div class="game-viewer-actions">
+            <button class="btn btn-fullscreen" id="fullscreen-btn">
+                <i class="fas fa-expand"></i> Fullscreen
+            </button>
+        </div>
+    </div>
+    
+    <!-- Modal/Popup Overlay -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Modal Title</h3>
+                <button class="modal-close" id="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content" id="modal-content">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-copyright">
+                    &copy; 2026 GameLite. All rights reserved.
+                </div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link" data-page="privacy">Privacy</a>
+                    <a href="#" class="footer-link" data-page="terms">Terms</a>
+                    <a href="#" class="footer-link" data-page="about">About</a>
+                    <a href="#" class="footer-link" data-page="contact">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Game data (in a real app, this would come from an API)
+       const games = [
+    {
+        id: 1,
+        title: "Poppy Strike 5",
+        category: "Action",
+        thumbnail: "./image/action/Poppy_Strike_5.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/9p1uqz68xfgc02tb292d3s5mhpbigqjd/" width="960" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.7,
+        featured: true
+    },
+    {
+        id: 2,
+        title: "Speedboa Warer",
+        category: "Racing",
+        thumbnail: "./image/racing/Speedboa_Warer.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/egufh15xrkv05q6m65s3wqnm42m3wpmq/" width="1334" height="750" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.5,
+        featured: true
+    },
+    {
+        id: 3,
+        title: "Blue Koala Puzzles",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Blue_Koala_Puzzles.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/yct47umxg4piy5w0z61on7bjtwf74ar6/" width="960" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.3,
+        featured: true
+    },
+    {
+        id: 4,
+        title: "Utka Clash",
+        category: "Shooter",
+        thumbnail: "./image/shooting/Utka_Clash.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/zmxjbnv63ylnzq5qvynsjj9e9h9c5mqr/" width="960" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.8,
+        featured: true
+    },
+    {
+        id: 5,
+        title: "T20 Cricket",
+        category: "Sports",
+        thumbnail: "./image/sports/T20_Cricket.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/3tgpavmaczut7bt1k4wgjkj09wco7s06/" width="1280" height="720" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.2,
+        featured: true
+    },
+    {
+        id: 6,
+        title: "Healthy Hero",
+        category: "Casual",
+        thumbnail: "./image/casual/Healthy_Hero.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/8gihzfzr5kp63nn5nnwnsu203en94bb3/" width="1920" height="1080" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.0,
+        featured: false
+    },
+    {
+        id: 7,
+        title: "Sunny Fields",
+        category: "Multiplayer",
+        thumbnail: "./image/multiplayer/Sunny_Fields.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/6677ao3k189n72jdo2h94kdvvkmo6c72/" width="1280" height="720" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.6,
+        featured: true
+    },
+    {
+        id: 8,
+        title: "Craft Runner",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Craft_Runner.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/uue9ttbprz2ayg3q7qu0xm9ct4gpx93p/" width="1920" height="1080" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.4,
+        featured: false
+    },
+    {
+        id: 9,
+        title: "Death Worm 2",
+        category: "Action",
+        thumbnail: "./image/action/Death_Worm_2.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/rnhbauw0kl19s241pd2ucscp0ncltbc0/" width="1136" height="640" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.5,
+        featured: true
+    },
+    {
+        id: 10,
+        title: "Snakes Eating Blocks",
+        category: "Adventure",
+        thumbnail: "./image/adventure/Snakes_Eating_Blocks.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/9eu1kt65229y2gvj3f0t8kdi7ror9vda/" width="800" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.3,
+        featured: false
+    },
+    {
+        id: 11,
+        title: "Super Ball Juggling",
+        category: "Sports",
+        thumbnail: "./image/sports/Super_Ball_Juggling_Remix.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/ocuawximv8s4omrwf7t8linvh4lsl9u5/" width="600" height="1024" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.1,
+        featured: false
+    },
+    {
+        id: 12,
+        title: "City Encounter",
+        category: "Shooter",
+        thumbnail: "./image/shooting/City_Encounter.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/bbb0kd8l3uj5h0ig5ymy6rcnni6cz9ad/" width="960" height="540" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.4,
+        featured: false
+    },
+    {
+        id: 13,
+        title: "Pokemon Memory Time",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Pokemon_Memory_Time.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/mbf3d5yx40vklpnmbg7c86rggzjkx0x1/" width="854" height="480" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.0,
+        featured: false
+    },
+    {
+        id: 14,
+        title: "Turbo Racer 3D",
+        category: "Racing",
+        thumbnail: "./image/racing/Turbo_Racer_3D.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/avkcgcjgjh3tq64xmsdwk9tmyblwyzqh/" width="800" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.3,
+        featured: false
+    },
+    {
+        id: 15,
+        title: "COD Duty Call FPS",
+        category: "Action",
+        thumbnail: "./image/action/COD_Duty_Call_FPS.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/rc0aptuuleju6xnlpeds38lisqpz1hzu/" width="960" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.7,
+        featured: true
+    },
+    {
+        id: 16,
+        title: "Swing Hero",
+        category: "Casual",
+        thumbnail: "./image/casual/Swing_Hero.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/czcr4z403xj0fdtaqc8ilxvlvzvj3v1r/" width="1080" height="1920" scrolling="none" frameborder="0"></iframe>',
+        rating: 3.9,
+        featured: false
+    },
+    {
+        id: 17,
+        title: "Jungle Fight",
+        category: "Multiplayer",
+        thumbnail: "./image/multiplayer/Jungle_Fight.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/xhx7z1mr85op97320i18awkx4837z316/" width="800" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.5,
+        featured: false
+    },
+    {
+        id: 18,
+        title: "Carrot Climber",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Carrot_Climber.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/qbaxklf6h2lmtermzm69mlnypubr60bj/" width="1080" height="1920" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.2,
+        featured: false
+    },
+    {
+        id: 19,
+        title: "Martial Artist",
+        category: "Adventure",
+        thumbnail: "./image/adventure/Martial_Artist.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/rhcgv1e11i4b969i0me6m3hgxn99295d/" width="854" height="480" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.3,
+        featured: false
+    },
+    {
+        id: 20,
+        title: "GT Flying Car Racing",
+        category: "Racing",
+        thumbnail: "./image/racing/GT_Flying_Car_Racing.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/m5pk5w0ghyz1aux84gvtmq86g1bmb0dc/" width="960" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.6,
+        featured: true
+    },
+    {
+        id: 21,
+        title: "Mickey Run",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Mickey_Run.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/cji6t48llsv4hcym69m6xvt4sbdxg741/" width="960" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 3.8,
+        featured: false
+    },
+    {
+        id: 22,
+        title: "Where is my Water",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Where_is_my_Water.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/1g5cp5vlxs5vbbvfj5965fd119k19fqv/" width="480" height="800" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.1,
+        featured: false
+    },
+    {
+        id: 23,
+        title: "Dead Seek",
+        category: "Action",
+        thumbnail: "./image/action/Dead_Seek.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/zt2tti9k25tgwbwmnacqoxz6l921m956/" width="960" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.4,
+        featured: false
+    },
+    {
+        id: 24,
+        title: "Screw Sort Puzzle",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Screw_Sort_Puzzle.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/7hih363nnbpbp77p9818x6i79tfp6yjr/" width="1334" height="750" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.0,
+        featured: false
+    },
+    {
+        id: 25,
+        title: "Tumble Boat",
+        category: "Casual",
+        thumbnail: "./image/casual/Tumble_Boat.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/7hb99cxugmjrazfqlythunduyx1ciek9/" width="1080" height="1920" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.2,
+        featured: false
+    },
+    {
+        id: 26,
+        title: "Logic Islands",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Logic_Islands.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/xsocq2kafpyvurms2y1w7o3g3urm948t/" width="600" height="800" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.3,
+        featured: false
+    },
+    {
+        id: 27,
+        title: "Labubu Zombie Miner",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Labubu_Zombie_Miner.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/t85v3af7y1yzwrpikrqr1zobpb3udk69/" width="800" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.5,
+        featured: true
+    },
+    {
+        id: 28,
+        title: "Tung TungBall",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Tung_TungBall.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/t8cff8dsfvu1mrtphdb8jl7nkj9yjbxp/" width="800" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.1,
+        featured: false
+    },
+    {
+        id: 29,
+        title: "Cinema Empire Idle Tycoon",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Cinema_Empire_Idle_Tycoon.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/7en169urbumxr5ii05udu97ucun00t0n/" width="1280" height="720" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.7,
+        featured: true
+    },
+    {
+        id: 30,
+        title: "Fruit Merge Juicy",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Fruit_Merge_Juicy.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/6k4wwg3g81x92db1hb6zchtqmyco7cou/" width="1080" height="1920" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.4,
+        featured: true
+    },
+    {
+        id: 31,
+        title: "Punching Excavator",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Punching_Excavator.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/i2185ta9sze8lwhmr43eq0ulwyt13fvq/" width="800" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.6,
+        featured: true
+    },
+    {
+        id: 32,
+        title: "Idle Game Prison Life",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Idle_Game_Prison_Life.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/fb5p9tfhex856zb56obrhgr4vxq9q4vn/" width="1280" height="720" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.5,
+        featured: true
+    },
+    {
+        id: 33,
+        title: "Chicken Dash",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Chicken_Dash.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/kzgs6w7m9a6oipotviw3o2mclc0b0zxk/" width="1920" height="1080" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.3,
+        featured: false
+    },
+    {
+        id: 34,
+        title: "Tap to Fish",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Tap_to_Fish.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/7ztwli9nry48v7id6vd7ajsjzvlhfkts/" width="1080" height="1920" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.0,
+        featured: false
+    },
+    {
+        id: 35,
+        title: "Parking Polly Cars",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Parking_Polly_Cars.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/kcrzitqb6wihdtc7dgarvuhzpbupldn3/" width="1080" height="1920" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.2,
+        featured: false
+    },
+    {
+        id: 36,
+        title: "Ludo Maximus",
+        category: "Multiplayer",
+        thumbnail: "./image/multiplayer/Ludo_Maximus.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/jmd9j7wzwico2zjafjda0usex5ugfw97/" width="720" height="1280" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.8,
+        featured: true
+    },
+    {
+        id: 37,
+        title: "Balloon Blitz",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Balloon_Blitz.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/0oj4ohrdfog5hba9jp7i47j0fn8ov9v2/" width="1920" height="1080" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.1,
+        featured: false
+    },
+    {
+        id: 38,
+        title: "Domino Online Multiplayer",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Domino_Online_Multiplayer.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/cesnlh8sq40hoqm7t79vz7xnb1mzvnbx/" width="1920" height="1080" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.0,
+        featured: false
+    },
+    {
+        id: 39,
+        title: "Candy Match Puzzle",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Candy_Match_Puzzle.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/0hyxlldj40odd2yomcfxd8xyhekuf5t9/" width="800" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.3,
+        featured: false
+    },
+    {
+        id: 40,
+        title: "Sprunki Memory Time",
+        category: "Puzzle",
+        thumbnail: "./image/puzzle/Sprunki_Memory_Time.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/l5kai7po6z7hxfjd0fwfbu1zo2ik8k3n/" width="480" height="854" scrolling="none" frameborder="0"></iframe>',
+        rating: 3.9,
+        featured: false
+    },
+    {
+        id: 41,
+        title: "Labubu and Friends",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Labubu_and_Friends.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/lv9gv1e4b0nnycb2h3v6chrzmsiwp1zr/" width="800" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.4,
+        featured: false
+    },
+    {
+        id: 42,
+        title: "Tumble Boat",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Tumble_Boat.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/7hb99cxugmjrazfqlythunduyx1ciek9/" width="1080" height="1920" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.7,
+        featured: true
+    },
+    {
+        id: 43,
+        title: "Thorn and Blast",
+        category: "Arcade",
+        thumbnail: "./image/arcade/Thorn_and_Blast.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/sbl7vx0od3t2zguu1qqvo7o40qsk4h0g/" width="1920" height="1080" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.6,
+        featured: true
+    },
+    {
+        id: 44,
+        title: "Falcon Dogfight",
+        category: "Action",
+        thumbnail: "./image/action/Falcon_Dogfight.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/cl3xlvuunrx3n0wzmg7djrolfz6qv9io/" width="1280" height="720" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.5,
+        featured: false
+    },
+    {
+        id: 45,
+        title: "Mr Autofire",
+        category: "Action",
+        thumbnail: "./image/action/Mr_Autofire.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/ghsqbsab3s37q5x2gk5k54w6shwl4i5f/" width="800" height="480" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.4,
+        featured: false
+    },
+    {
+        id: 46,
+        title: "Thung Thung Night Escape",
+        category: "Action",
+        thumbnail: "./image/action/Thung_Thung_Night_Escape.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/620nm6ephwpsh0izvkzh6k8d304t2vpp/" width="960" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.7,
+        featured: true
+    },
+    {
+        id: 47,
+        title: "Car Stunts Track",
+        category: "Racing",
+        thumbnail: "./image/racing/Car_Stunts_Track.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/i7crwtn7a4fwloe5djewy7qiejzlplsd/" width="800" height="600" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.8,
+        featured: true
+    },
+    {
+        id: 48,
+        title: "Stunt Planes",
+        category: "Racing",
+        thumbnail: "./image/racing/Stunt_Planes.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/3boeltjylmwolgm20mh48mol3l9iwakr/" width="1344" height="756" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.6,
+        featured: true
+    },
+    {
+        id: 49,
+        title: "Riders Downhill Racing",
+        category: "Racing",
+        thumbnail: "./image/racing/Riders_Downhill_Racing.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/pvy2k1jp0znnq1l8uyai88tk2uc6xcf8/" width="800" height="450" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.3,
+        featured: false
+    },
+    {
+        id: 50,
+        title: "Bus Driving Simulator",
+        category: "Racing",
+        thumbnail: "./image/racing/Bus_Driving_Simulator.jpg",
+        embed: '<iframe src="https://html5.gamemonetize.co/adz9a5tpbei6tzq8pgtbcwsmimlmiev0/" width="1280" height="720" scrolling="none" frameborder="0"></iframe>',
+        rating: 4.5,
+        featured: true
+    }
+];
+
+        // Page content for modals
+        const pageContent = {
+            privacy: {
+                title: "Privacy Policy",
+                content: `
+                    <h2>Privacy Policy</h2>
+                    <p>Last updated: January 1, 2026</p>
+                    
+                    <p>Nexus Games ("us", "we", or "our") operates the Nexus Games website (the "Service").</p>
+                    
+                    <p>This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.</p>
+                    
+                    <h2>Information Collection And Use</h2>
+                    <p>We collect several different types of information for various purposes to provide and improve our Service to you.</p>
+                    
+                    <h3>Types of Data Collected</h3>
+                    <ul>
+                        <li><strong>Personal Data:</strong> While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you.</li>
+                        <li><strong>Usage Data:</strong> We may also collect information how the Service is accessed and used.</li>
+                        <li><strong>Cookies and Tracking Data:</strong> We use cookies and similar tracking technologies to track the activity on our Service.</li>
+                    </ul>
+                    
+                    <h2>Use of Data</h2>
+                    <p>Nexus Games uses the collected data for various purposes:</p>
+                    <ul>
+                        <li>To provide and maintain our Service</li>
+                        <li>To notify you about changes to our Service</li>
+                        <li>To allow you to participate in interactive features of our Service</li>
+                        <li>To provide customer support</li>
+                        <li>To gather analysis or valuable information so that we can improve our Service</li>
+                        <li>To monitor the usage of our Service</li>
+                        <li>To detect, prevent and address technical issues</li>
+                    </ul>
+                `
+            },
+            terms: {
+                title: "Terms of Service",
+                content: `
+                    <h2>Terms of Service</h2>
+                    <p>Last updated: January 1, 2026</p>
+                    
+                    <p>Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the Nexus Games website (the "Service") operated by Nexus Games ("us", "we", or "our").</p>
+                    
+                    <p>Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.</p>
+                    
+                    <h2>Accounts</h2>
+                    <p>When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service.</p>
+                    
+                    <h2>Intellectual Property</h2>
+                    <p>The Service and its original content, features and functionality are and will remain the exclusive property of Nexus Games and its licensors. The Service is protected by copyright, trademark, and other laws of both the United States and foreign countries.</p>
+                    
+                    <h2>Links To Other Web Sites</h2>
+                    <p>Our Service may contain links to third-party web sites or services that are not owned or controlled by Nexus Games.</p>
+                    
+                    <p>Nexus Games has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. You further acknowledge and agree that Nexus Games shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.</p>
+                    
+                    <h2>Termination</h2>
+                    <p>We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
+                `
+            },
+            about: {
+                title: "About Us",
+                content: `
+                    <h2>About Nexus Games</h2>
+                    <p>Welcome to Nexus Games, your premier destination for high-quality HTML5 games!</p>
+                    
+                    <p>Founded in 2026, Nexus Games was created with a simple mission: to provide a fun, accessible, and ad-free gaming experience for everyone. Our platform offers a wide variety of games across multiple genres, from action-packed adventures to brain-teasing puzzles.</p>
+                    
+                    <h2>Our Team</h2>
+                    <p>We're a small but passionate team of game enthusiasts, developers, and designers dedicated to bringing you the best gaming experience possible.</p>
+                    
+                    <ul>
+                        <li><strong>John Doe</strong> - Founder & Lead Developer</li>
+                        <li><strong>Jane Smith</strong> - Game Curator & Community Manager</li>
+                        <li><strong>Alex Johnson</strong> - UI/UX Designer</li>
+                    </ul>
+                    
+                    <h2>Our Technology</h2>
+                    <p>All games on our platform are built using HTML5 technology, which means they run smoothly in your browser without requiring any plugins or downloads. This makes gaming accessible from any device with a modern web browser.</p>
+                    
+                    <h2>Community</h2>
+                    <p>We value our community of players and are always looking for ways to improve. If you have any suggestions for new games or features, please don't hesitate to contact us!</p>
+                `
+            },
+            contact: {
+                title: "Contact Us",
+                content: `
+                    <h2>Contact Nexus Games</h2>
+                    <p>We'd love to hear from you! Whether you have a question about our games, need technical support, or want to suggest a new feature, feel free to reach out.</p>
+                    
+                    <h3>Contact Information</h3>
+                    <ul>
+                        <li><strong>Email:</strong> contact@nexusgames.com</li>
+                        <li><strong>Phone:</strong> (555) 123-4567</li>
+                        <li><strong>Address:</strong> 123 Gaming Street, Gameville, GV 12345</li>
+                    </ul>
+                    
+                    <h3>Support Hours</h3>
+                    <p>Our support team is available Monday through Friday, 9:00 AM to 5:00 PM EST.</p>
+                    
+                    <h3>Feedback Form</h3>
+                    <form id="contact-form">
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px;">Name:</label>
+                            <input type="text" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px;">Email:</label>
+                            <input type="email" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px;">Message:</label>
+                            <textarea style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ddd; min-height: 100px;"></textarea>
+                        </div>
+                        <button type="submit" style="background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">Send Message</button>
+                    </form>
+                `
+            }
+        };
+
+        // DOM elements
+        const gamesContainer = document.getElementById('games-container');
+        const recentGamesContainer = document.getElementById('recent-games');
+        const categoryGamesContainer = document.getElementById('category-games-container');
+        const categoryGamesSection = document.getElementById('category-games');
+        const categoryTitle = document.getElementById('category-title');
+        const searchResultsContainer = document.getElementById('search-results-container');
+        const searchResultsSection = document.getElementById('search-results');
+        const menuToggle = document.getElementById('menu-toggle');
+        const userNav = document.querySelector('.user-nav');
+        const favoritesGamesContainer = document.getElementById('favorites-games-container');
+        const favoritesGamesSection = document.getElementById('favorites-games');
+        const featuredGamesContainer = document.getElementById('featured-games-container');
+        const featuredGamesSection = document.getElementById('featured-games');
+        const gameViewer = document.getElementById('game-viewer');
+        const gameIframe = document.getElementById('game-iframe');
+        const gameViewerTitle = document.getElementById('game-viewer-title');
+        const gameViewerClose = document.getElementById('game-viewer-close');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        const searchInput = document.querySelector('.search-bar');
+        const searchIcon = document.querySelector('.search-icon');
+        const closeIcon = document.querySelector('.close-icon');
+        const categoryButtons = document.querySelectorAll('.category');
+        const favoritesCount = document.querySelector('.favorites-count');
+        const mainContent = document.querySelector('.main-content');
+        const favoritesLink = document.getElementById('favorites-link');
+        const featuredLink = document.getElementById('featured-link');
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const modalClose = document.getElementById('modal-close');
+        const footerLinks = document.querySelectorAll('.footer-link');
+
+        // State management
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let recentlyPlayed = JSON.parse(localStorage.getItem('recentlyPlayed')) || [];
+        let currentCategory = 'All Games';
+
+        // Initialize the app
+        function init() {
+            renderGames();
+            renderRecentlyPlayed();
+            renderFeaturedGames();
+            updateFavoritesCount();
+            setupEventListeners();
+        }
+        
+        // Mobile menu toggle
+        menuToggle.addEventListener('click', function() {
+    userNav.classList.toggle('active');
+    
+    // Change icon based on state
+    const icon = this.querySelector('i');
+    if (userNav.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+});
+
+// Close mobile menu when clicking a nav link
+document.querySelectorAll('.user-nav .nav-link').forEach(link => {
+    link.addEventListener('click', function() {
+        if (window.innerWidth <= 768) {
+            userNav.classList.remove('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        }
+    });
+});
+
+        // Render all games
+        function renderGames() {
+            gamesContainer.innerHTML = '';
+            
+            const filteredGames = games.filter(game => {
+                const matchesCategory = currentCategory === 'All Games' || game.category === currentCategory;
+                return matchesCategory;
+            });
+
+            if (filteredGames.length === 0) {
+                gamesContainer.innerHTML = '<p class="no-games">No games found in this category.</p>';
+                return;
+            }
+
+            filteredGames.forEach((game, index) => {
+                const isFavorite = favorites.includes(game.id);
+                const gameCard = createGameCard(game, isFavorite);
+                gameCard.style.animationDelay = `${index * 0.05}s`;
+                gamesContainer.appendChild(gameCard);
+            });
+        }
+
+        // Render category games
+        function renderCategoryGames(category) {
+            categoryGamesContainer.innerHTML = '';
+            
+            const filteredGames = games.filter(game => game.category === category);
+            
+            if (filteredGames.length === 0) {
+                categoryGamesContainer.innerHTML = '<p class="no-games">No games found in this category.</p>';
+                return;
+            }
+
+            filteredGames.forEach((game, index) => {
+                const isFavorite = favorites.includes(game.id);
+                const gameCard = createGameCard(game, isFavorite);
+                gameCard.style.animationDelay = `${index * 0.05}s`;
+                categoryGamesContainer.appendChild(gameCard);
+            });
+        }
+
+        // Render search results
+        function renderSearchResults() {
+            searchResultsContainer.innerHTML = '';
+            
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            if (searchTerm === '') {
+                // If search is empty, hide search results and show normal sections
+                searchResultsSection.classList.remove('active');
+                mainContent.classList.remove('searching');
+                return;
+            }
+
+            // Show search results and hide normal sections
+            searchResultsSection.classList.add('active');
+            mainContent.classList.add('searching');
+
+            const filteredGames = games.filter(game => {
+                return game.title.toLowerCase().includes(searchTerm) || 
+                       game.category.toLowerCase().includes(searchTerm);
+            });
+
+            if (filteredGames.length === 0) {
+                searchResultsContainer.innerHTML = '<p class="no-games">No games found matching your search.</p>';
+                return;
+            }
+
+            filteredGames.forEach((game, index) => {
+                const isFavorite = favorites.includes(game.id);
+                const gameCard = createGameCard(game, isFavorite);
+                gameCard.style.animationDelay = `${index * 0.05}s`;
+                searchResultsContainer.appendChild(gameCard);
+            });
+        }
+
+        // Render recently played games
+        function renderRecentlyPlayed() {
+            recentGamesContainer.innerHTML = '';
+            
+            if (recentlyPlayed.length === 0) {
+                recentGamesContainer.innerHTML = '<p class="no-games">Play some games to see them here!</p>';
+                return;
+            }
+
+            const recentGamesData = recentlyPlayed.map(gameId => 
+                games.find(game => game.id === gameId)
+            ).filter(game => game).slice(0, 5);
+
+            recentGamesData.forEach((game, index) => {
+                const isFavorite = favorites.includes(game.id);
+                const gameCard = createGameCard(game, isFavorite);
+                gameCard.style.animationDelay = `${index * 0.05}s`;
+                recentGamesContainer.appendChild(gameCard);
+            });
+        }
+
+        // Render favorite games
+        function renderFavorites() {
+            favoritesGamesContainer.innerHTML = '';
+            
+            if (favorites.length === 0) {
+                favoritesGamesContainer.innerHTML = '<p class="no-games">You have no favorite games yet. Click the heart icon on games to add them to favorites.</p>';
+                return;
+            }
+
+            const favoriteGames = favorites.map(gameId => 
+                games.find(game => game.id === gameId)
+            ).filter(game => game);
+
+            favoriteGames.forEach((game, index) => {
+                const gameCard = createGameCard(game, true); // All these are favorites
+                gameCard.style.animationDelay = `${index * 0.05}s`;
+                favoritesGamesContainer.appendChild(gameCard);
+            });
+        }
+
+        // Render featured games
+        function renderFeaturedGames() {
+            featuredGamesContainer.innerHTML = '';
+            
+            const featuredGames = games.filter(game => game.featured);
+            
+            if (featuredGames.length === 0) {
+                featuredGamesContainer.innerHTML = '<p class="no-games">No featured games at the moment.</p>';
+                return;
+            }
+
+            featuredGames.forEach((game, index) => {
+                const isFavorite = favorites.includes(game.id);
+                const gameCard = createGameCard(game, isFavorite);
+                gameCard.style.animationDelay = `${index * 0.05}s`;
+                featuredGamesContainer.appendChild(gameCard);
+            });
+        }
+
+        // Create a game card element
+        function createGameCard(game, isFavorite = false) {
+            const gameCard = document.createElement('div');
+            gameCard.className = 'game-card';
+            gameCard.dataset.id = game.id;
+            gameCard.dataset.category = game.category;
+            gameCard.dataset.title = game.title.toLowerCase();
+
+            gameCard.innerHTML = `
+                <div class="game-thumbnail">
+                    <img src="${game.thumbnail}" alt="${game.title}">
+                    ${game.featured ? '<span class="game-badge">Featured</span>' : ''}
+                    <div class="play-overlay">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-info">
+                    <h3 class="game-title">${game.title}</h3>
+                    <div class="game-meta">
+                        <span>${game.category}</span>
+                        <span class="game-rating">
+                            <i class="fas fa-star"></i> ${game.rating}
+                        </span>
+                    </div>
+                    <div class="game-actions">
+                        <button class="btn btn-play">Play Now</button>
+                        <button class="btn btn-favorite ${isFavorite ? 'favorited' : ''}">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            return gameCard;
+        }
+
+        // Update favorites count badge
+        function updateFavoritesCount() {
+            favoritesCount.textContent = favorites.length;
+        }
+
+        // Show modal with page content
+        function showModal(page) {
+            if (pageContent[page]) {
+                modalTitle.textContent = pageContent[page].title;
+                modalContent.innerHTML = pageContent[page].content;
+                modalOverlay.classList.add('active');
+                
+                // Focus the first input in the form if it exists
+                const formInput = modalContent.querySelector('input');
+                if (formInput) {
+                    formInput.focus();
+                }
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Play game when clicking play button or play icon
+            document.addEventListener('click', function(e) {
+                const playBtn = e.target.closest('.btn-play');
+                const playOverlay = e.target.closest('.play-overlay');
+                const favoriteBtn = e.target.closest('.btn-favorite');
+                
+                if (playBtn || playOverlay) {
+                    const gameCard = (playBtn || playOverlay).closest('.game-card');
+                    const gameId = parseInt(gameCard.dataset.id);
+                    const game = games.find(g => g.id === gameId);
+                    
+                    if (game) {
+                        playGame(game);
+                    }
+                }
+                
+                if (favoriteBtn) {
+                    const gameCard = favoriteBtn.closest('.game-card');
+                    const gameId = parseInt(gameCard.dataset.id);
+                    toggleFavorite(gameId, favoriteBtn);
+                }
+            });
+            
+            // Close game viewer
+            gameViewerClose.addEventListener('click', closeGameViewer);
+            
+            // Fullscreen button
+            fullscreenBtn.addEventListener('click', toggleFullscreen);
+            
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const hasText = this.value.trim() !== '';
+                
+                // Toggle icons based on whether there's text
+                if (hasText) {
+                    searchIcon.style.display = 'none';
+                    closeIcon.style.display = 'block';
+                } else {
+                    searchIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                }
+                
+                renderSearchResults();
+            });
+            
+            // Close icon click handler
+            closeIcon.addEventListener('click', function() {
+                searchInput.value = '';
+                searchIcon.style.display = 'block';
+                closeIcon.style.display = 'none';
+                renderSearchResults();
+            });
+            
+            // Category filters
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    
+                    // If we're in search mode, clear the search
+                    if (searchInput.value.trim() !== '') {
+                        searchInput.value = '';
+                        searchIcon.style.display = 'block';
+                        closeIcon.style.display = 'none';
+                        searchResultsSection.classList.remove('active');
+                        mainContent.classList.remove('searching');
+                    }
+                    
+                    // If we're in favorites mode, exit it
+                    if (favoritesGamesSection.classList.contains('active')) {
+                        mainContent.classList.remove('favorites-selected');
+                        favoritesGamesSection.classList.remove('active');
+                    }
+                    
+                    // If we're in featured mode, exit it
+                    if (featuredGamesSection.classList.contains('active')) {
+                        mainContent.classList.remove('featured-selected');
+                        featuredGamesSection.classList.remove('active');
+                    }
+                    
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentCategory = this.textContent;
+                    
+                    if (category === 'all') {
+                        // Show all games and hide category section
+                        mainContent.classList.remove('category-selected');
+                        categoryGamesSection.classList.remove('active');
+                        renderGames();
+                    } else {
+                        // Show category games and hide other sections
+                        mainContent.classList.add('category-selected');
+                        categoryGamesSection.classList.add('active');
+                        categoryTitle.textContent = currentCategory;
+                        renderCategoryGames(category);
+                    }
+                });
+            });
+            
+            // Favorites link click handler
+            favoritesLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Clear any active states
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                categoryButtons[0].classList.add('active'); // Set "All Games" as active
+                currentCategory = 'All Games';
+                
+                // Clear search if active
+                if (searchInput.value.trim() !== '') {
+                    searchInput.value = '';
+                    searchIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                    searchResultsSection.classList.remove('active');
+                    mainContent.classList.remove('searching');
+                }
+                
+                // Exit featured mode if active
+                if (featuredGamesSection.classList.contains('active')) {
+                    mainContent.classList.remove('featured-selected');
+                    featuredGamesSection.classList.remove('active');
+                }
+                
+                // Toggle favorites view
+                mainContent.classList.toggle('favorites-selected');
+                favoritesGamesSection.classList.toggle('active');
+                
+                // Only render favorites if we're showing the favorites section
+                if (favoritesGamesSection.classList.contains('active')) {
+                    renderFavorites();
+                } else {
+                    // If toggling off, show the normal view
+                    mainContent.classList.remove('category-selected');
+                    categoryGamesSection.classList.remove('active');
+                    renderGames();
+                }
+            });
+            
+            // Featured link click handler
+            featuredLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Clear any active states
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                categoryButtons[0].classList.add('active'); // Set "All Games" as active
+                currentCategory = 'All Games';
+                
+                // Clear search if active
+                if (searchInput.value.trim() !== '') {
+                    searchInput.value = '';
+                    searchIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                    searchResultsSection.classList.remove('active');
+                    mainContent.classList.remove('searching');
+                }
+                
+                // Exit favorites mode if active
+                if (favoritesGamesSection.classList.contains('active')) {
+                    mainContent.classList.remove('favorites-selected');
+                    favoritesGamesSection.classList.remove('active');
+                }
+                
+                // Toggle featured view
+                mainContent.classList.toggle('featured-selected');
+                featuredGamesSection.classList.toggle('active');
+                
+                // Only render featured if we're showing the featured section
+                if (featuredGamesSection.classList.contains('active')) {
+                    renderFeaturedGames();
+                } else {
+                    // If toggling off, show the normal view
+                    mainContent.classList.remove('category-selected');
+                    categoryGamesSection.classList.remove('active');
+                    renderGames();
+                }
+            });
+            
+            // Footer links click handlers
+            footerLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const page = this.dataset.page;
+                    showModal(page);
+                });
+            });
+            
+            // Modal close button
+            modalClose.addEventListener('click', closeModal);
+            
+            // Close modal when clicking outside content
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) {
+                    closeModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+                    closeModal();
+                }
+            });
+        }
+
+ function playGame(game) {
+    // Show loading state
+    gameIframe.src = "";
+    gameViewerTitle.textContent = `Loading ${game.title}...`;
+    gameViewer.classList.add('active');
+    
+    // Add error event listener
+    gameIframe.onerror = function() {
+        gameViewerTitle.textContent = `Error loading ${game.title}`;
+        // You could also show a message in the iframe or a retry button
+    };
+    
+    // Set the iframe source after setting up error handling
+    gameIframe.src = game.embed.match(/src="([^"]+)"/)[1];
+    
+    // Add to recently played
+    addToRecentlyPlayed(game.id);
+}
+
+        // Close game viewer
+        function closeGameViewer() {
+            gameViewer.classList.remove('active');
+            gameIframe.src = '';
+        }
+
+        // Toggle fullscreen
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                gameViewer.requestFullscreen().catch(err => {
+                    alert(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Toggle favorite
+        function toggleFavorite(gameId, button) {
+            const index = favorites.indexOf(gameId);
+            
+            if (index === -1) {
+                favorites.push(gameId);
+                button.classList.add('favorited');
+            } else {
+                favorites.splice(index, 1);
+                button.classList.remove('favorited');
+            }
+            
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            updateFavoritesCount();
+            
+            // If favorites view is active, update it
+            if (favoritesGamesSection.classList.contains('active')) {
+                renderFavorites();
+            }
+        }
+
+        // Add to recently played
+        function addToRecentlyPlayed(gameId) {
+            // Remove if already exists
+            const index = recentlyPlayed.indexOf(gameId);
+            if (index !== -1) {
+                recentlyPlayed.splice(index, 1);
+            }
+            
+            // Add to beginning
+            recentlyPlayed.unshift(gameId);
+            
+            // Keep only the last 5 games
+            if (recentlyPlayed.length > 5) {
+                recentlyPlayed = recentlyPlayed.slice(0, 5);
+            }
+            
+            localStorage.setItem('recentlyPlayed', JSON.stringify(recentlyPlayed));
+            renderRecentlyPlayed();
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>
